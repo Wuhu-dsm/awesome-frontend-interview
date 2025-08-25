@@ -1,0 +1,35 @@
+{
+  "name": "chunk-upload-system",
+  "version": "1.0.0",
+  "description": "完整的分片上传系统 - 前端后端",
+  "main": "server/app.js",
+  "scripts": {
+    "start": "node server/app.js",
+    "dev": "nodemon server/app.js",
+    "client": "cd client && npm start"
+  },
+  "keywords": [
+    "chunk-upload",
+    "file-upload",
+    "resume-upload"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "express": "^4.18.2",
+    "fs-extra": "^11.1.1",
+    "multer": "^1.4.5-lts.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/fs-extra": "^11.0.4",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^24.3.0",
+    "@types/react": "^19.1.11",
+    "nodemon": "^3.0.1"
+  }
+}
