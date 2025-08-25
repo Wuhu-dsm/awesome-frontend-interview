@@ -13,6 +13,7 @@
 
 import SparkMD5 from 'spark-md5'
 import { buildApiUrl, API_ENDPOINTS } from '../config/api.ts'
+import { calculateFileMD5 } from '../utils/md5-calculator.ts'
 
 // 上传状态枚举
 enum UploadStatus {
@@ -153,36 +154,15 @@ class FileChunkUploader {
     }
   }
 
-  // 计算文件MD5
+  // 计算文件MD5 (使用Web Worker)
   private async calculateFileMD5 (): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const spark = new SparkMD5.ArrayBuffer()
-      const chunkSize = 2 * 1024 * 1024 // 2MB for MD5 calculation
-      const chunks = Math.ceil(this.file.size / chunkSize)
-      let currentChunk = 0
-
-      const loadNext = () => {
-        const start = currentChunk * chunkSize
-        const end = Math.min(start + chunkSize, this.file.size)
-        const reader = new FileReader()
-
-        reader.onload = e => {
-          spark.append(e.target?.result as ArrayBuffer)
-          currentChunk++
-
-          if (currentChunk < chunks) {
-            loadNext()
-          } else {
-            const hash = spark.end()
-            resolve(hash)
-          }
-        }
-
-        reader.onerror = reject
-        reader.readAsArrayBuffer(this.file.slice(start, end))
+    return calculateFileMD5(this.file, {
+      chunkSize: 2 * 1024 * 1024, // 2MB for MD5 calculation
+      onProgress: (progress) => {
+        console.log(`MD5计算进度: ${progress.percentage.toFixed(2)}%`)
+        // 可以发送 MD5 计算进度事件给外部监听器
+        // this.emit('md5-progress', progress)
       }
-
-      loadNext()
     })
   }
 
