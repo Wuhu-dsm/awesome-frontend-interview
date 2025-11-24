@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>大文件分片上传示例</title>
+    <style>
+      body { font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial; margin: 24px; }
+      .row { margin-bottom: 12px; }
+      label { display: inline-block; width: 120px; }
+      progress { width: 360px; height: 18px; }
+      .log { white-space: pre-wrap; background: #f7f7f7; padding: 8px; border-radius: 6px; }
+    </style>
+  </head>
+  <body>
+    <h2>大文件分片上传（示例）</h2>
+    <div class="row">
+      <label>选择文件：</label>
+      <input id="file" type="file" />
+    </div>
+    <div class="row">
+      <label>分片大小(MB)：</label>
+      <input id="chunkSizeMB" type="number" min="1" value="5" />
+    </div>
+    <div class="row">
+      <label>并发数：</label>
+      <input id="concurrency" type="number" min="1" value="4" />
+    </div>
+    <div class="row">
+      <button id="start">开始上传</button>
+      <button id="pause" style="margin-left:8px;">暂停</button>
+      <button id="resume" style="margin-left:8px;">恢复</button>
+    </div>
+    <div class="row">
+      <label>进度：</label>
+      <progress id="progress" value="0" max="100"></progress>
+      <span id="percent">0%</span>
+    </div>
+    <div class="row">
+      <div id="result"></div>
+    </div>
+    <div class="row">
+      <div id="log" class="log"></div>
+    </div>
+
+    <script type="module">
+      import { ChunkUploader } from '/client/index.js';
+
+      const $ = (id) => document.getElementById(id);
+      const fileInput = $('file');
+      const startBtn = $('start');
+      const pauseBtn = $('pause');
+      const resumeBtn = $('resume');
+      const chunkSizeMBInput = $('chunkSizeMB');
+      const concurrencyInput = $('concurrency');
+      const progressEl = $('progress');
+      const percentEl = $('percent');
+      const resultEl = $('result');
+      const logEl = $('log');
+
+      function log(msg) {
+        const time = new Date().toLocaleTimeString();
+        logEl.textContent += `[${time}] ${msg}\n`;
+      }
+
+      let uploader = null;
+      startBtn.addEventListener('click', async () => {
+        const file = fileInput.files && fileInput.files[0];
+        if (!file) { alert('请先选择文件'); return; }
+        const chunkSizeMB = parseInt(chunkSizeMBInput.value, 10) || 5;
+        const concurrency = parseInt(concurrencyInput.value, 10) || 4;
+        const chunkSize = chunkSizeMB * 1024 * 1024;
+
+        uploader = new ChunkUploader({ baseURL: '' }); // same origin
+        progressEl.value = 0; percentEl.textContent = '0%'; resultEl.innerHTML = ''; logEl.textContent = '';
+        log(`开始上传：${file.name}，大小 ${Math.round(file.size/1024/1024)} MB，分片 ${chunkSizeMB}MB，并发 ${concurrency}`);
+
+        try {
+          const resp = await uploader.upload(file, {
+            chunkSize,
+            concurrency,
+            onProgress: (p) => {
+              progressEl.value = Math.floor(p * 100);
+              percentEl.textContent = `${Math.floor(p * 100)}%`;
+            },
+          });
+          log('上传完成');
+          if (resp && resp.url) {
+            resultEl.innerHTML = `已合并文件：<a href="${resp.url}" target="_blank">${resp.url}</a>`;
+          }
+        } catch (e) {
+          console.error(e);
+          log('上传失败：' + (e && e.message ? e.message : '未知错误'));
+          alert('上传失败');
+        }
+      });
+
+      pauseBtn.addEventListener('click', () => {
+        if (!uploader) { alert('请先开始上传'); return; }
+        uploader.pause();
+        log('已暂停上传');
+      });
+
+      resumeBtn.addEventListener('click', () => {
+        if (!uploader) { alert('请先开始上传'); return; }
+        uploader.resume();
+        log('已恢复上传');
+      });
+    </script>
+  </body>
+  </html>
