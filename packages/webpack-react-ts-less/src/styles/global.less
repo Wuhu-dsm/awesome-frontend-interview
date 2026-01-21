@@ -1,0 +1,139 @@
+@import './variables.less';
+
+// ==================== CSS Reset ====================
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: @font-family;
+  font-size: @font-size-base;
+  line-height: 1.5;
+  color: @text-color;
+  background-color: @bg-color;
+}
+
+// ==================== 链接样式 ====================
+
+a {
+  color: @primary-color;
+  text-decoration: none;
+  transition: color @transition-fast;
+
+  &:hover {
+    color: darken(@primary-color, 10%);
+  }
+}
+
+// ==================== 图片样式 ====================
+
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+
+// ==================== 列表样式 ====================
+
+ul,
+ol {
+  list-style: none;
+}
+
+// ==================== 按钮基础样式 ====================
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+
+  &:focus-visible {
+    outline: 2px solid @primary-color;
+    outline-offset: 2px;
+  }
+}
+
+// ==================== 输入框基础样式 ====================
+
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+  border: 1px solid @border-color;
+  border-radius: @border-radius-md;
+  padding: @spacing-sm @spacing-md;
+  transition: border-color @transition-fast, box-shadow @transition-fast;
+
+  &:focus {
+    border-color: @primary-color;
+    box-shadow: 0 0 0 3px rgba(@primary-color, 0.1);
+  }
+}
+
+// ==================== 滚动条样式 ====================
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: @bg-color;
+}
+
+::-webkit-scrollbar-thumb {
+  background: darken(@border-color, 10%);
+  border-radius: 4px;
+
+  &:hover {
+    background: darken(@border-color, 20%);
+  }
+}
+
+// ==================== 选中文字样式 ====================
+
+::selection {
+  background: @primary-color;
+  color: #fff;
+}
+
+// ==================== 工具类 ====================
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 @spacing-lg;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-primary {
+  color: @primary-color;
+}
+
+.mt-1 { margin-top: @spacing-sm; }
+.mt-2 { margin-top: @spacing-md; }
+.mt-3 { margin-top: @spacing-lg; }
+.mt-4 { margin-top: @spacing-xl; }
+
+.mb-1 { margin-bottom: @spacing-sm; }
+.mb-2 { margin-bottom: @spacing-md; }
+.mb-3 { margin-bottom: @spacing-lg; }
+.mb-4 { margin-bottom: @spacing-xl; }
+

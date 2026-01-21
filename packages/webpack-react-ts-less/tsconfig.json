@@ -1,0 +1,55 @@
+{
+  "compilerOptions": {
+    // ==================== 编译目标 ====================
+    // 编译输出的 ECMAScript 版本
+    "target": "ES2020",
+    // 使用的模块系统
+    "module": "ESNext",
+    // 模块解析策略
+    "moduleResolution": "node",
+    // 生成的 JavaScript 使用的库
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+
+    // ==================== JSX 配置 ====================
+    // JSX 转换方式，react-jsx 使用新的 JSX 转换
+    "jsx": "react-jsx",
+
+    // ==================== 严格模式 ====================
+    // 启用所有严格类型检查选项
+    "strict": true,
+    // 禁止隐式 any 类型
+    "noImplicitAny": true,
+    // 严格的 null 检查
+    "strictNullChecks": true,
+
+    // ==================== 模块互操作 ====================
+    // 允许导入 JSON 模块
+    "resolveJsonModule": true,
+    // 将每个文件作为单独模块
+    "isolatedModules": true,
+    // 允许从没有默认导出的模块中默认导入
+    "allowSyntheticDefaultImports": true,
+    // 启用 ES 模块互操作
+    "esModuleInterop": true,
+
+    // ==================== 路径别名 ====================
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["./*"],
+      "@components/*": ["./components/*"],
+      "@styles/*": ["./styles/*"],
+      "@utils/*": ["./utils/*"]
+    },
+
+    // ==================== 输出配置 ====================
+    // 不生成输出文件（由 Babel 处理）
+    "noEmit": true,
+    // 跳过库的类型检查
+    "skipLibCheck": true,
+    // 强制文件名大小写一致
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
+

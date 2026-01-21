@@ -1,0 +1,79 @@
+@import './variables.less';
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: background-color @transition-base, color @transition-base;
+}
+
+// ==================== 亮色主题 ====================
+.light {
+  background-color: @bg-color;
+  color: @text-color;
+}
+
+// ==================== 暗色主题 ====================
+.dark {
+  background-color: @bg-dark;
+  color: #e2e8f0;
+
+  .main {
+    background-color: darken(@bg-dark, 5%);
+  }
+
+  .footer {
+    background-color: darken(@bg-dark, 10%);
+    color: #a0aec0;
+  }
+}
+
+.main {
+  flex: 1;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.hero {
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, @primary-color 0%, @secondary-color 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+
+  @media (max-width: @breakpoint-md) {
+    font-size: 1.75rem;
+  }
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  color: @text-light;
+
+  @media (max-width: @breakpoint-md) {
+    font-size: 1rem;
+  }
+}
+
+.footer {
+  padding: 1.5rem;
+  text-align: center;
+  background: @bg-light;
+  color: @text-light;
+  border-top: 1px solid @border-color;
+  margin-top: auto;
+
+  p {
+    margin: 0;
+  }
+}
+
