@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Columns 瀑布流 - 最简方案</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #1c1c1e;
+      --bg-card: #2c2c2e;
+      --accent-rose: #ff6b9d;
+      --accent-violet: #a78bfa;
+      --accent-cyan: #67e8f9;
+      --text-light: #f4f4f5;
+      --text-muted: #a1a1aa;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Noto Sans SC', sans-serif;
+      background: var(--bg-dark);
+      min-height: 100vh;
+      color: var(--text-light);
+    }
+
+    /* 装饰背景 */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(255, 107, 157, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(167, 139, 250, 0.1) 0%, transparent 40%);
+      pointer-events: none;
+    }
+
+    header {
+      text-align: center;
+      padding: 50px 20px 40px;
+      position: relative;
+    }
+
+    header h1 {
+      font-family: 'Crimson Pro', serif;
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--accent-rose), var(--accent-violet), var(--accent-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-top: 16px;
+      padding: 6px 16px;
+      background: linear-gradient(135deg, var(--accent-rose), var(--accent-violet));
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    /* ========================================
+       核心：CSS Columns 瀑布流
+       最简单的纯 CSS 方案！
+       ======================================== */
+    .masonry {
+      column-count: 4;           /* 列数 */
+      column-gap: 20px;          /* 列间距 */
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px 30px 60px;
+    }
+
+    .masonry-item {
+      break-inside: avoid;       /* 防止卡片被截断 */
+      margin-bottom: 20px;       /* 行间距 */
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--bg-card);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .masonry-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .masonry-item img {
+      width: 100%;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .masonry-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .item-content {
+      padding: 16px;
+    }
+
+    .item-content h3 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .item-content p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .item-tags {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      background: rgba(167, 139, 250, 0.15);
+      color: var(--accent-violet);
+      border: 1px solid rgba(167, 139, 250, 0.3);
+    }
+
+    .tag.rose {
+      background: rgba(255, 107, 157, 0.15);
+      color: var(--accent-rose);
+      border-color: rgba(255, 107, 157, 0.3);
+    }
+
+    .tag.cyan {
+      background: rgba(103, 232, 249, 0.15);
+      color: var(--accent-cyan);
+      border-color: rgba(103, 232, 249, 0.3);
+    }
+
+    /* 响应式：根据屏幕宽度调整列数 */
+    @media (max-width: 1200px) {
+      .masonry { column-count: 3; }
+    }
+
+    @media (max-width: 800px) {
+      .masonry { column-count: 2; }
+    }
+
+    @media (max-width: 500px) {
+      .masonry { 
+        column-count: 1; 
+        padding: 20px 16px;
+      }
+    }
+
+    /* 入场动画 */
+    .masonry-item {
+      animation: fadeIn 0.5s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px 50px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    footer code {
+      background: var(--bg-card);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: 'Consolas', monospace;
+      color: var(--accent-cyan);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Waterfall Gallery</h1>
+    <p>CSS Columns 瀑布流方案</p>
+    <span class="badge">纯 CSS · 无需 JavaScript 计算</span>
+  </header>
+
+  <main class="masonry" id="masonry">
+    <!-- 动态生成 -->
+  </main>
+
+  <footer>
+    <p>核心代码只需 3 行：<code>column-count</code> + <code>column-gap</code> + <code>break-inside: avoid</code></p>
+  </footer>
+
+  <script>
+    const photos = [
+      { h: 300, title: '星空露营', desc: '在繁星下入眠', tags: ['星空', '露营'] },
+      { h: 400, title: '城市霓虹', desc: '都市夜晚的璀璨灯火', tags: ['城市', '夜景'] },
+      { h: 250, title: '海边日落', desc: '金色余晖洒满海面', tags: ['海洋', '日落'] },
+      { h: 350, title: '森林小径', desc: '阳光透过树叶的间隙', tags: ['森林', '自然'] },
+      { h: 280, title: '雪山之巅', desc: '银装素裹的纯净世界', tags: ['雪山', '冬季'] },
+      { h: 320, title: '樱花季节', desc: '粉色花瓣随风飘落', tags: ['樱花', '春天'] },
+      { h: 380, title: '古镇老街', desc: '青石板路的岁月痕迹', tags: ['建筑', '人文'] },
+      { h: 260, title: '沙漠孤舟', desc: '驼铃声中的丝路风情', tags: ['沙漠', '探险'] },
+      { h: 340, title: '极光之舞', desc: '北极天幕上的绚丽色彩', tags: ['极光', '奇观'] },
+      { h: 290, title: '田园牧歌', desc: '宁静乡村的悠然时光', tags: ['田园', '风景'] },
+      { h: 360, title: '瀑布飞流', desc: '气势磅礴的自然奇观', tags: ['瀑布', '壮观'] },
+      { h: 270, title: '湖光倒影', desc: '如镜湖面映照群山', tags: ['湖泊', '静谧'] },
+    ];
+
+    const tagColors = ['', 'rose', 'cyan'];
+    const container = document.getElementById('masonry');
+
+    photos.forEach((photo, i) => {
+      const card = document.createElement('div');
+      card.className = 'masonry-item';
+      card.style.animationDelay = `${i * 0.08}s`;
+
+      const imgUrl = `https://picsum.photos/seed/col${i}/${400}/${photo.h}`;
+      const tagsHtml = photo.tags.map((t, j) => 
+        `<span class="tag ${tagColors[j % 3]}">${t}</span>`
+      ).join('');
+
+      card.innerHTML = `
+        <img src="${imgUrl}" alt="${photo.title}" loading="lazy">
+        <div class="item-content">
+          <h3>${photo.title}</h3>
+          <p>${photo.desc}</p>
+          <div class="item-tags">${tagsHtml}</div>
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,72 @@
+{
+  // 访问 https://aka.ms/tsconfig 阅读更多关于此文件的信息
+  "compilerOptions": {
+    // 编译器选项
+
+    // 1. 文件布局 (File Layout)
+    // "rootDir": "./src", // 指定输入文件的根目录
+    // "outDir": "./dist", // 指定输出目录
+    // "baseUrl": "./", // 用于解析非相对模块名称的基目录
+    // "paths": { "@/*": ["src/*"] }, // 设置模块名到基于 baseUrl 的路径映射
+
+    // 2. 环境设置 (Environment Settings)
+    "module": "nodenext", // 指定生成的模块代码系统
+    "target": "esnext", // 指定 ECMAScript 目标版本
+    "lib": ["esnext", "dom"], // 指定要包含在编译中的库文件
+    "types": [], // 指定要包含在编译中的类型声明文件
+    // 对于 nodejs:
+    // "types": ["node"], // 包含 node 的类型定义
+    // 并且运行 npm install -D @types/node
+
+    // 3. 模块解析 (Module Resolution)
+    "moduleResolution": "nodenext", // 指定模块解析策略
+    "resolveJsonModule": true, // 允许导入 .json 文件
+    "allowImportingTsExtensions": true, // 允许在 import 语句中使用 .ts 扩展名（通常配合 noEmit）
+    // "noEmit": true, // 不生成输出文件（常用于 Vite 等工具只进行类型检查）
+
+    // 4. JavaScript 支持 (JavaScript Support)
+    "allowJs": true, // 允许编译器编译 JavaScript 文件
+    "checkJs": true, // 在 .js 文件中报告错误（配合 allowJs 使用）
+
+    // 5. 互操作性 (Interop)
+    "esModuleInterop": true, // 发射额外的 JavaScript 以支持导入 CommonJS 模块
+    "allowSyntheticDefaultImports": true, // 允许从没有默认导出的模块中进行默认导入
+    "forceConsistentCasingInFileNames": true, // 强制文件名大小写一致
+
+    // 6. 其他输出 (Other Outputs)
+    "sourceMap": true, // 是否生成相应的 .map 文件
+    "declaration": true, // 是否生成相应的 .d.ts 声明文件
+    "declarationMap": true, // 是否为 .d.ts 文件生成 source map
+    "removeComments": false, // 编译时是否删除注释
+
+    // 7. 更严格的类型检查选项 (Stricter Typechecking Options)
+    "strict": true, // 启用所有严格类型检查选项
+    "noImplicitAny": true, // 在表达式和声明上有隐含的 any 类型时报错
+    "strictNullChecks": true, // 启用严格的 null 检查
+    "noUncheckedIndexedAccess": true, // 开启后，在通过索引访问时会包含 undefined 类型
+    "exactOptionalPropertyTypes": true, // 开启后，可选属性不能显式赋值为 undefined
+
+    // 8. 实验性选项 (Experimental Options)
+    "experimentalDecorators": true, // 启用对 ES7 装饰器的实验性支持
+    "emitDecoratorMetadata": true, // 为装饰器元数据生成设计类型
+
+    // 9. 样式/优化选项 (Style Options)
+    // "noImplicitReturns": true, // 检查函数是否所有分支都有返回值
+    // "noImplicitOverride": true, // 强制要求在子类重写方法时使用 override 修饰符
+    // "noUnusedLocals": true, // 检查未使用的局部变量
+    // "noUnusedParameters": true, // 检查未使用的函数参数
+    // "noFallthroughCasesInSwitch": true, // 防止 switch 语句贯穿
+    // "noPropertyAccessFromIndexSignature": true, // 强制通过索引访问索引签名定义的属性
+
+    // 10. 推荐/现代选项 (Recommended Options)
+    "jsx": "react-jsx", // 指定 JSX 在 JavaScript 文件中的输出方式
+    "verbatimModuleSyntax": true, // 强制使用更严格的模块语法
+    "isolatedModules": true, // 将每个文件作为单独的模块进行转译
+    "noUncheckedSideEffectImports": true, // 检查是否存在无效的副作用导入
+    "moduleDetection": "force", // 强制将所有文件视为模块
+    "skipLibCheck": true, // 跳过声明文件（.d.ts）的类型检查
+    "downlevelIteration": true // 为迭代器提供更全面的支持（支持更旧的目标环境）
+  },
+  "include": ["src/**/*"], // 指定要包含在编译中的文件
+  "exclude": ["node_modules", "dist"] // 指定要排除在编译之外的文件
+}

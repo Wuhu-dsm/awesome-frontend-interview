@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @property test {}
+
+        .container {
+            perspective: 500px;
+
+        }
+
+        .wrap {
+            width: 200px;
+            height: 100px;
+            border: 1px solid black;
+            border-radius: 5px;
+            line-height: 100px;
+            text-align: center;
+            animation: rotate 3s linear infinite;
+            transform-origin: right center;
+            backface-visibility: visible;
+            transform-style: preserve-3d;
+
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotateY(0deg);
+            }
+
+            to {
+                transform: rotateY(360deg);
+            }
+        }
+
+        .laoxiao {
+            border: 1px solid black;
+            transform: translateZ(100px) rotateZ(30deg);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="wrap">
+            我叫劳大
+            <div class="laoxiao">我叫牢小</div>
+        </div>
+    </div>
+</body>
+
+</html>

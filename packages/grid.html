@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        @keyframes rotate {
+            from {
+                transform: perspective(100px) rotateX(0deg) rotateY(0deg);
+            }
+
+            to {
+                transform:perspective(100px) rotateX(360deg) rotateY(360deg);
+            }
+        }
+
+        .container {
+            display: grid;
+            /* 创建三列，每列等宽 */
+            grid-template-columns: repeat(3, 200px);
+            grid-template-rows: repeat(3, 200px);
+            grid-template-areas: ". top ." "left mid right" ". bottom back ";
+            /* perspective-origin: top; */
+            animation: rotate 3s infinite linear;
+            transform-style: preserve-3d;
+            font-size: 30px;
+        }
+
+        /* 第一行：放在第 1 列 */
+        .item:nth-child(1) {
+            background-color: aliceblue;
+            grid-area: top;
+            transform: rotateX(90deg);
+            transform-origin: bottom;
+            display: grid;
+            place-items: center;
+        }
+
+        /* 第二行：放在第 2 列 */
+        .item:nth-child(2) {
+            display: grid;
+            place-items: center;
+            background-color: blue;
+            grid-area: left;
+            transform: rotateY(-90deg);
+            transform-origin: right;
+
+
+        }
+
+        /* 第三行：放在第 3 列 */
+        .item:nth-child(3) {
+            display: grid;
+            place-items: center;
+            grid-area: mid;
+            background-color: yellow;
+            transform: translateZ(0px);
+
+        }
+
+        /* 第三行：放在第 3 列 */
+        .item:nth-child(4) {
+            display: grid;
+            place-items: center;
+            grid-area: right;
+            background-color: red;
+            transform: rotateY(90deg);
+            transform-origin: left;
+
+        }
+
+        /* 第三行：放在第 3 列 */
+        .item:nth-child(5) {
+            display: grid;
+            place-items: center;
+            grid-area: bottom;
+            background-color: orange;
+            transform: rotateX(-90deg);
+            transform-origin: top;
+
+        }
+
+        .item:nth-child(6) {
+            display: grid;
+            place-items: center;
+            grid-area: back;
+            background-color: gold;
+            transform: translateX(-100%) translateZ(-200px) translateY(-100%) rotateY(-180deg)
+        }
+    </style>
+
+    <div class="container">
+        <div class="item">1</div>
+        <div class="item">2</div>
+        <div class="item">3</div>
+        <div class="item">4</div>
+        <div class="item">5</div>
+        <div class="item">back!</div>
+    </div>
+</body>
+
+</html>

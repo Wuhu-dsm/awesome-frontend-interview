@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .flex {
+            display: flex;
+            flex-wrap: wrap;
+            /* 允许换行 */
+            gap: 10px;
+            /* 设置网格间的间距 */
+            width: 100%;
+            /* 容器宽度 */
+        }
+
+        .flex div {
+            /* 关键计算：(100% - 总间距) / 3 */
+            /* 总间距 = 间距数量(2) * gap大小(10px) */
+            flex: 0 0 calc((100% - 20px) / 3);
+
+            /* 辅助样式 */
+            aspect-ratio: 1 / 1;
+            /* 保持正方形 */
+            background-color: #3498db;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</body>
+
+</html>

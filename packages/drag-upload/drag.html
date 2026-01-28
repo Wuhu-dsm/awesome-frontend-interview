@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .area {
+            width: 200px;
+            height: 100px;
+            border: 1px solid black
+        }
+    </style>
+</head>
+
+<body>
+    <div class="area"></div>
+
+
+    <script>
+        const url = new URL(window.location.href)
+        console.log(url)
+        for (const [i, v] of url.searchParams.entries()) {
+            console.log(i, v)
+        }
+        const area = document.querySelector(".area")
+        area.addEventListener("dragover", (e) => {
+            e.preventDefault()
+        })
+        area.addEventListener("drop", (e) => {
+            e.preventDefault()
+            const [img] = e.dataTransfer.files
+            const element = document.createElement("img")
+            // file 2 blob
+            const fileReader = new FileReader()
+
+            fileReader.onload = (e) => {
+                element.src = e.target.result
+                document.documentElement.appendChild(element)
+                // 發起
+                const formdata = new FormData()
+                formdata.append("img", img)
+                fetch("/api/upload", {
+                    method: "POST",
+                    body: formdata
+                })
+            }
+            fileReader.readAsDataURL(img)
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const service = new ServiceWorker("shared-worker.js")
+        navigator.serviceWorker.getRegistration("").then(v=>v.active)
+        const sw = new SharedWorker("shared-worker.js")
+        sw.port.start()
+        // 接收消息
+        sw.port.onmessage = (event) => {
+            console.log('收到 SharedWorker 广播:', event.data);
+        };
+
+        // 发送消息
+        function sendToAll(msg) {
+            sharedWorker.port.postMessage(msg);
+        }
+    </script>
+</body>
+
+</html>

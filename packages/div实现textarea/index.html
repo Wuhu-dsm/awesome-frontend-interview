@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .editable-container {
+            width: 100%;
+            min-height: 100px;
+            /* 设置最小高度 */
+            max-height: 300px;
+            /* 设置最大高度，超出则滚动 */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: 1px solid black;
+            font-family: sans-serif;
+            line-height: 1.5;
+            overflow-y: auto;
+            word-break: break-all;
+        }
+
+        /* 模拟 placeholder 效果 */
+        .editable-container:empty::before {
+            content: attr(placeholder);
+            color: #999;
+            cursor: text;
+        }
+
+        /* 获得焦点时的边框颜色 */
+        .editable-container:focus {
+            border-color: #409eff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="editable-container" contenteditable="true" placeholder="请输入内容...">
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="parent">
+        <div class="child">123</div>
+    </div>
+    <script>
+        window.addEventListener("resize",()=>{
+            console.log("resize")
+        })
+        const child = document.querySelector(".child")
+        child.addEventListener("click", () => {
+            console.log("child click")
+        })
+        const parent = document.querySelector(".parent")
+        parent.addEventListener("click", () => {
+            console.log("parent click")
+        }, true)
+        document.addEventListener("click", () => {
+            console.log("document 收到了 click")
+        })
+    </script>
+</body>
+
+</html>

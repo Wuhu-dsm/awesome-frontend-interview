@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .cart {
+            position: fixed;
+            bottom: 50px;
+            right: 50px;
+            width: 60px;
+            height: 60px;
+            background-color: #f60;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            z-index: 100;
+        }
+
+        .ball-outer {
+            position: fixed;
+            transition: transform 0.6s linear;
+            z-index: 99;
+            pointer-events: none;
+        }
+
+        .ball-inner {
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+            transition: transform 0.6s cubic-bezier(0.04, -0.47, 1, 0.39)
+        }
+
+        .add-btn {
+            margin: 100px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: transform 0.6s cubic-bezier(0.3, -0.2, 1, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+    <button class="add-btn">加入购物车</button>
+    <div class="cart" id="cart">购物车</div>
+
+    <script>
+        const btn = document.querySelector('.add-btn');
+        const cart = document.getElementById('cart');
+
+        btn.addEventListener('click', (e) => {
+            // 1. 创建小球元素
+            const outer = document.createElement('div');
+            outer.className = 'ball-outer';
+            const inner = document.createElement('div');
+            inner.className = 'ball-inner';
+            outer.appendChild(inner);
+            document.body.appendChild(outer);
+
+            // 2. 获取起始位置和目标位置
+            const btnRect = btn.getBoundingClientRect();
+            const cartRect = cart.getBoundingClientRect();
+
+            // 设置起始位置
+            const startX = btnRect.left + btnRect.width / 2;
+            const startY = btnRect.top + btnRect.height / 2;
+            outer.style.left = startX + 'px';
+            outer.style.top = startY + 'px';
+
+            // 3. 触发重绘以确保 transition 生效
+            // outer.clientWidth;
+
+            // 4. 设置动画目标
+            const distX = cartRect.left - startX + cartRect.width / 2;
+            const distY = cartRect.top - startY + cartRect.height / 2;
+
+            outer.style.transform = `translateX(${distX}px)`;
+            inner.style.transform = `translateY(${distY}px)`;
+
+            // 5. 动画结束后移除元素
+            outer.addEventListener('transitionend', () => {
+                outer.remove();
+            });
+        });
+    </script>
+</body>
+
+</html>
